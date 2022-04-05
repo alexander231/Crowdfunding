@@ -1,4 +1,7 @@
 import React from "react"
+import { Outlet, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+
 import {
   Navbar,
   Container,
@@ -10,6 +13,7 @@ import {
   ButtonToolbar,
 } from "react-bootstrap"
 const Header = () => {
+  const navigate = useNavigate()
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -26,10 +30,19 @@ const Header = () => {
           </Nav>
 
           <ButtonToolbar>
-            <Button className="me-2" variant="outline-light">
+            <Button
+              className="me-2"
+              variant="outline-light"
+              onClick={() => window.open("/login", "_blank")}
+            >
               Log in
             </Button>
-            <Button variant="outline-light">Sign up</Button>
+            <Button
+              variant="outline-light"
+              onClick={() => window.open("/signup", "_blank")}
+            >
+              Signup
+            </Button>
           </ButtonToolbar>
         </Navbar.Collapse>
       </Container>
