@@ -1,7 +1,7 @@
 import React from "react"
 import { Outlet, Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-
+import { HouseDoorFill } from "react-bootstrap-icons"
 import {
   Navbar,
   Container,
@@ -12,12 +12,13 @@ import {
   Button,
   ButtonToolbar,
 } from "react-bootstrap"
+
 const Header = () => {
   const navigate = useNavigate()
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
-        <Navbar.Brand>Crowdfunding</Navbar.Brand>
+        <Navbar.Brand href="/">Crowdfunding</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -25,22 +26,23 @@ const Header = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link>Browse Startups</Nav.Link>
-            <Nav.Link>Start your raise</Nav.Link>
+            <Nav.Link onClick={() => navigate("/startups")}>
+              Browse Startups
+            </Nav.Link>
+            <Nav.Link onClick={() => navigate("/raise")}>
+              Start your raise
+            </Nav.Link>
           </Nav>
 
           <ButtonToolbar>
             <Button
               className="me-2"
               variant="outline-light"
-              onClick={() => window.open("/login", "_blank")}
+              onClick={() => navigate("/login")}
             >
               Log in
             </Button>
-            <Button
-              variant="outline-light"
-              onClick={() => window.open("/signup", "_blank")}
-            >
+            <Button variant="outline-light" onClick={() => navigate("/signup")}>
               Signup
             </Button>
           </ButtonToolbar>

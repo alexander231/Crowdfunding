@@ -4,10 +4,13 @@ const mongoose = require("mongoose")
 const app = express()
 const logger = require("./utils/logger")
 const config = require("./utils/config")
-const Startup = require("./models/startup")
-const User = require("./models/user")
-const Investor = require("./models/investor")
-const Founder = require("./models/founder")
+const Startup = require("./models/Startup")
+const User = require("./models/User")
+const Investor = require("./models/Investor")
+const Founder = require("./models/Founder")
+const startupsRouter = require("./controllers/startups")
+const script = require("./utils/script")
+const usersRouter = require("./controllers/users")
 logger.info("connecting to", config.MONGODB_URI)
 
 mongoose
@@ -24,7 +27,8 @@ mongoose
 
 app.use(cors())
 app.use(express.json())
-
+app.use("/api/startups", startupsRouter)
+app.use("/api/users", usersRouter)
 app.get("/", (request, response) => {
   response.send("Cox")
 })
