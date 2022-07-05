@@ -2,7 +2,9 @@ import React, { useState } from "react"
 import validator from "validator"
 import { Form, Button } from "react-bootstrap"
 import { gql, useMutation } from "@apollo/client"
+import { useNavigate } from "react-router-dom"
 const RegistrationForm = () => {
+  const navigate = useNavigate()
   const [moneyError, setMoneyError] = useState("")
   const [emailError, setEmailError] = useState(
     "We'll never share your email with anyone else."
@@ -52,8 +54,11 @@ const RegistrationForm = () => {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
+  const [addUser, { data, loading, error }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
+      alert(
+        `Created the user ${result.data.register.username} with the mail ${result.data.register.email}`
+      )
       console.log(result)
     },
     variables: {
@@ -62,12 +67,20 @@ const RegistrationForm = () => {
       password: values.password,
       confirmPassword: values.confirmPassword,
       role: values.role,
-      money: money,
+      money: Number(money),
     },
   })
   const onSubmit = (event) => {
     event.preventDefault()
+
     addUser()
+      .then(({ data }) => {
+        navigate("/login")
+      })
+      .catch((e) => {
+        console.log(e)
+        alert(e)
+      })
   }
   return (
     <Form className="d-grid rounded p-4 p-sm-2">

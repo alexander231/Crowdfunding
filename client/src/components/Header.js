@@ -12,8 +12,11 @@ import {
   Button,
   ButtonToolbar,
 } from "react-bootstrap"
-
+import { useSelector } from "react-redux"
 const Header = () => {
+  const { loggedIn, userData } = useSelector((state) => state.user)
+  const state = useSelector((state) => state)
+  console.log(state)
   const navigate = useNavigate()
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -35,16 +38,40 @@ const Header = () => {
           </Nav>
 
           <ButtonToolbar>
-            <Button
-              className="me-2"
-              variant="outline-light"
-              onClick={() => navigate("/login")}
-            >
-              Log in
-            </Button>
-            <Button variant="outline-light" onClick={() => navigate("/signup")}>
-              Signup
-            </Button>
+            {!loggedIn ? (
+              <div>
+                <Button
+                  className="me-2"
+                  variant="outline-light"
+                  onClick={() => navigate("/login")}
+                >
+                  Log in
+                </Button>
+                <Button
+                  variant="outline-light"
+                  onClick={() => navigate("/signup")}
+                >
+                  Signup
+                </Button>
+              </div>
+            ) : (
+              <div>
+                {" "}
+                {/* <Button
+                  variant="outline-light"
+                  onClick={() => navigate("/signup")}
+                >
+                  User
+                </Button> */}
+                <Navbar.Collapse className="justify-content-end">
+                  <Navbar.Text>
+                    Signed in as: <a href="#login">{userData.email}</a>
+                  </Navbar.Text>
+                  &nbsp;
+                  <Navbar.Text>Role: {userData.role}</Navbar.Text>
+                </Navbar.Collapse>
+              </div>
+            )}
           </ButtonToolbar>
         </Navbar.Collapse>
       </Container>
